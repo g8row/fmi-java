@@ -6,7 +6,9 @@ import java.util.UUID;
 public class Session {
     String sessionId;
     String userId;
+    String username;
     LocalDateTime ttl;
+    Boolean admin;
 
     private static final int MINUTES_TTL = 5;
 
@@ -14,10 +16,28 @@ public class Session {
         return userId;
     }
 
-    public Session(String userId) {
+    public Session(String userId, String username, Boolean admin) {
         this.userId = userId;
         sessionId = UUID.randomUUID().toString();
         ttl = LocalDateTime.now().plusMinutes(MINUTES_TTL);
+        this.username = username;
+        this.admin = admin;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
     public String getSessionId() {

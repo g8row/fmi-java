@@ -6,9 +6,10 @@ import java.io.IOException;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Server server = null;
+        Server server;
         try {
-            server = new Server();
+            server = new Server("data/db.txt",
+                    "data/log");
             server.start();
         } catch (IOException e) {
             throw new RuntimeException(e);

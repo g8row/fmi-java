@@ -27,7 +27,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private boolean admin;
+    private Boolean admin;
 
     private static final int SALT_SIZE = 16;
     private static final int HEX1 = 0xff;
@@ -143,7 +143,7 @@ public class User {
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[SALT_SIZE];
         sr.nextBytes(salt);
-        return new String(salt, StandardCharsets.UTF_8).replaceAll(System.lineSeparator(), "");
+        return new String(salt, StandardCharsets.UTF_8).replaceAll("[" + System.lineSeparator() + ",]", "");
     }
 
     @Override
