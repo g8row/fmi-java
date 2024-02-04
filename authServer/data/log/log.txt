@@ -1,8 +1,90 @@
-2024-01-31T00:57:04.117294400: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:64308
-2024-01-31T00:59:20.040727100: unsuccessful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:64412
-2024-01-31T00:59:21.413739100: unsuccessful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:64412
-2024-01-31T00:59:22.176140500: unsuccessful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:64412
-2024-01-31T00:59:22.936443600: unsuccessful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:64412
-2024-01-31T00:59:23.695199600: unsuccessful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:64412
-2024-01-31T00:59:34.565845500: unsuccessful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:64431
-2024-01-31T00:59:39.040317: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:64431
+2024-01-31T17:48:13.414684800: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:11567
+2024-01-31T17:48:35.064331100: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:11664
+2024-01-31T17:48:44.364589900: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:11664
+2024-01-31T17:49:41.936725200: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:11664
+2024-01-31T17:49:43.058274: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:11664
+2024-01-31T17:50:12.505836600: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:11735
+2024-01-31T17:50:19.737765200: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:11735
+2024-02-02T13:44:49.241966600: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:23186
+2024-02-02T13:45:23.286162500: successful login to 09f3f510-d451-4eab-a9c8-c4aca90eb96c from /127.0.0.1:23186
+2024-02-02T13:56:50.942337200: successful login to 92c30a38-9641-49ca-9acb-a833b5c743bd from /127.0.0.1:23205
+2024-02-02T14:06:11.583466400: successful login to a74e1629-6852-4f39-8319-ab7fefe5c947 from /127.0.0.1:23251
+2024-02-02T14:07:12.647795700: unsuccessful login to a74e1629-6852-4f39-8319-ab7fefe5c947 from /127.0.0.1:23260
+2024-02-02T17:20:26.258621800: successful login to d734585b-9ae2-40d1-8007-b3a09fb084a8 from /127.0.0.1:24658
+2024-02-02T17:22:32.248108: unsuccessful login to  from /127.0.0.1:24658
+2024-02-02T17:24:29.816117900: unsuccessful login to  from /127.0.0.1:24674
+2024-02-02T17:25:28.880831500: unsuccessful login to d734585b-9ae2-40d1-8007-b3a09fb084a8 from /127.0.0.1:24674
+2024-02-02T17:25:36.740216: successful login to d734585b-9ae2-40d1-8007-b3a09fb084a8 from /127.0.0.1:24674
+2024-02-02T17:25:49.597029300: successful login to d734585b-9ae2-40d1-8007-b3a09fb084a8 from /127.0.0.1:24674
+2024-02-02T17:30:55.852277700: unsuccessful login to  from /127.0.0.1:24689
+2024-02-02T17:30:57.967788: unsuccessful login to  from /127.0.0.1:24689
+2024-02-02T17:31:43.741526300: successful login to d734585b-9ae2-40d1-8007-b3a09fb084a8 from /127.0.0.1:24689
+2024-02-02T17:32:16.043444200: d734585b-9ae2-40d1-8007-b3a09fb084a8 executed RESET_PASSWORD (database edit) by /127.0.0.1:24689 - changes were edit user ofmlem2
+2024-02-02T17:32:54.965929700: successful login to d734585b-9ae2-40d1-8007-b3a09fb084a8 from /127.0.0.1:24689
+2024-02-02T18:21:55.305871400: successful login to d734585b-9ae2-40d1-8007-b3a09fb084a8 from /127.0.0.1:24868
+2024-02-02T18:50:22.049054400: successful login to e227576d-ef32-45e9-9efe-5c1f9b7c01b7 from /127.0.0.1:25034
+2024-02-02T18:54:33.754742300: successful login to f1a270e6-5276-499b-89d6-adef2d5bc08d from /127.0.0.1:25060
+2024-02-02T18:56:04.799402700: successful login to f1a270e6-5276-499b-89d6-adef2d5bc08d from /127.0.0.1:25060
+2024-02-02T18:56:24.966368700: f1a270e6-5276-499b-89d6-adef2d5bc08d executed RESET_PASSWORD (database edit) by /127.0.0.1:25060 - changes were reset password oftf
+2024-02-02T18:56:24.983049900: f1a270e6-5276-499b-89d6-adef2d5bc08d executed DELETE_USER (database edit) by /127.0.0.1:25060 - result: fail. Problem with writing to database
+2024-02-02T18:56:37.047896900: f1a270e6-5276-499b-89d6-adef2d5bc08d executed RESET_PASSWORD (database edit) by /127.0.0.1:25060 - changes were reset password oftf
+2024-02-02T18:56:37.047896900: f1a270e6-5276-499b-89d6-adef2d5bc08d executed DELETE_USER (database edit) by /127.0.0.1:25060 - result: fail. Problem with writing to database
+2024-02-02T18:58:00.250948800: successful login to f1a270e6-5276-499b-89d6-adef2d5bc08d from /127.0.0.1:25073
+2024-02-02T18:58:41.800720200: f1a270e6-5276-499b-89d6-adef2d5bc08d executed RESET_PASSWORD (database edit) by /127.0.0.1:25073 - changes were reset password oftf
+2024-02-02T19:05:33.016210700: successful login to 30472288-317b-4e0d-9b09-1560f1a752f2 from /127.0.0.1:25116
+2024-02-02T20:24:21.985304100: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:26500
+2024-02-02T20:24:59.028990: successful login to 85cba22e-2a27-4123-bc1e-cf786321d870 from /127.0.0.1:26500
+2024-02-02T20:25:45.548429100: successful login to a143e59e-314a-407a-83d9-1ab6cbaafa3a from /127.0.0.1:26521
+2024-02-04T16:40:23.406760800: successful login to 5854f0fb-de1b-41ff-97e5-5d10e5b669bc from /127.0.0.1:14951
+2024-02-04T16:40:35.128639800: successful login to 5854f0fb-de1b-41ff-97e5-5d10e5b669bc from /127.0.0.1:14951
+2024-02-04T16:44:51.403745600: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:14970
+2024-02-04T16:45:11.890904600: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed ADD_ADMIN_USER (database edit) by /127.0.0.1:14970 - changes were set admin status of name to true
+2024-02-04T16:45:11.903257800: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed ADD_ADMIN_USER (database edit) by /127.0.0.1:14970 - result: success
+2024-02-04T16:49:39.848577700: unsuccessful login to  from /127.0.0.1:15129
+2024-02-04T16:49:48.639249500: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15129
+2024-02-04T16:50:10.539167700: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed ADD_ADMIN_USER (database edit) by /127.0.0.1:15129 - changes were set admin status of name to true
+2024-02-04T16:50:10.551391: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed ADD_ADMIN_USER (database edit) by /127.0.0.1:15129 - result: success
+2024-02-04T16:50:37.623404700: unsuccessful login to 5854f0fb-de1b-41ff-97e5-5d10e5b669bc from /127.0.0.1:15129
+2024-02-04T16:51:21.736493300: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15129
+2024-02-04T16:51:28.406700700: unsuccessful login to 5854f0fb-de1b-41ff-97e5-5d10e5b669bc from /127.0.0.1:15129
+2024-02-04T16:51:43.431215500: unsuccessful login to f1a270e6-5276-499b-89d6-adef2d5bc08d from /127.0.0.1:15129
+2024-02-04T16:52:40.970549100: successful login to a2ae325f-d0b3-407c-830b-3b813f8c48bd from /127.0.0.1:15147
+2024-02-04T16:52:50.292545700: successful login to a2ae325f-d0b3-407c-830b-3b813f8c48bd from /127.0.0.1:15147
+2024-02-04T16:53:02.295437200: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15147
+2024-02-04T16:53:26.768548300: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed ADD_ADMIN_USER (database edit) by /127.0.0.1:15147 - changes were set admin status of name to true
+2024-02-04T16:53:26.777182500: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed ADD_ADMIN_USER (database edit) by /127.0.0.1:15147 - result: success
+2024-02-04T16:53:34.618611100: successful login to a2ae325f-d0b3-407c-830b-3b813f8c48bd from /127.0.0.1:15147
+2024-02-04T16:53:57.976483500: a2ae325f-d0b3-407c-830b-3b813f8c48bd executed REMOVE_ADMIN_USER (database edit) by /127.0.0.1:15147 - changes were set admin status of tf to false
+2024-02-04T16:53:57.976483500: a2ae325f-d0b3-407c-830b-3b813f8c48bd executed REMOVE_ADMIN_USER (database edit) by /127.0.0.1:15147 - result: success
+2024-02-04T16:55:43.710737100: successful login to a2ae325f-d0b3-407c-830b-3b813f8c48bd from /127.0.0.1:15158
+2024-02-04T16:57:24.123492200: unsuccessful login to a2ae325f-d0b3-407c-830b-3b813f8c48bd from /127.0.0.1:15158
+2024-02-04T16:57:34.465917800: successful login to a2ae325f-d0b3-407c-830b-3b813f8c48bd from /127.0.0.1:15158
+2024-02-04T16:57:54.545197900: a2ae325f-d0b3-407c-830b-3b813f8c48bd executed ADD_ADMIN_USER (database edit) by /127.0.0.1:15158 - changes were set admin status of tf to true
+2024-02-04T16:57:54.549698600: a2ae325f-d0b3-407c-830b-3b813f8c48bd executed ADD_ADMIN_USER (database edit) by /127.0.0.1:15158 - result: success
+2024-02-04T16:58:05.766623300: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15158
+2024-02-04T16:58:33.846371100: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed REMOVE_ADMIN_USER (database edit) by /127.0.0.1:15158 - changes were set admin status of name to false
+2024-02-04T16:58:33.846371100: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed REMOVE_ADMIN_USER (database edit) by /127.0.0.1:15158 - result: success
+2024-02-04T16:59:17.023278900: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15158
+2024-02-04T16:59:36.574236100: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed DELETE_USER (database edit) by /127.0.0.1:15158 - changes were delete user: name
+2024-02-04T16:59:36.576987700: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed DELETE_USER (database edit) by /127.0.0.1:15158 - result: success
+2024-02-04T16:59:46.440640900: unsuccessful login to  from /127.0.0.1:15158
+2024-02-04T17:00:08.107650100: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15158
+2024-02-04T17:00:39.728739600: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed RESET_PASSWORD (database edit) by /127.0.0.1:15158 - changes were reset password oftf
+2024-02-04T17:00:39.728739600: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed DELETE_USER (database edit) by /127.0.0.1:15158 - result: success
+2024-02-04T17:00:47.827260100: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15158
+2024-02-04T17:00:59.684834800: unsuccessful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15158
+2024-02-04T17:01:45.268082700: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15158
+2024-02-04T17:02:03.956823800: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed RESET_PASSWORD (database edit) by /127.0.0.1:15158 - changes were reset password oftf2
+2024-02-04T17:02:03.972474: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed DELETE_USER (database edit) by /127.0.0.1:15158 - result: success
+2024-02-04T17:29:59.074565900: unsuccessful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15359
+2024-02-04T17:30:07.872355400: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15359
+2024-02-04T17:30:31.385955300: successful login to b03323b8-de3a-4b43-8ad8-4446a8d045e4 from /127.0.0.1:15359
+2024-02-04T17:30:41.285463400: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15359
+2024-02-04T17:31:17.504820100: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed RESET_PASSWORD (database edit) by /127.0.0.1:15359 - changes were reset password oftf
+2024-02-04T17:31:17.507570500: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed DELETE_USER (database edit) by /127.0.0.1:15359 - result: success
+2024-02-04T17:31:25.946623500: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15359
+2024-02-04T17:35:00.532168500: successful login to 8dbf608d-9ed3-4595-90b7-b57db7936226 from /127.0.0.1:15359
+2024-02-04T17:35:26.366316900: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed ADD_ADMIN_USER (database edit) by /127.0.0.1:15359 - changes were set admin status of name to true
+2024-02-04T17:35:26.369373600: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed ADD_ADMIN_USER (database edit) by /127.0.0.1:15359 - result: success
+2024-02-04T17:35:43.873639200: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed REMOVE_ADMIN_USER (database edit) by /127.0.0.1:15359 - changes were set admin status of tf to false
+2024-02-04T17:35:43.873639200: 8dbf608d-9ed3-4595-90b7-b57db7936226 executed REMOVE_ADMIN_USER (database edit) by /127.0.0.1:15359 - result: success

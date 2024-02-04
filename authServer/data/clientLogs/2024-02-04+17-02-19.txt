@@ -1,0 +1,2 @@
+Connection reset
+[java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401), java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434), bg.sofia.uni.fmi.mjt.authserver.client.Client.receiveAndPrintReply(Client.java:100), bg.sofia.uni.fmi.mjt.authserver.client.Client.start(Client.java:51), MainClient.main(MainClient.java:10)]

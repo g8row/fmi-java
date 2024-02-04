@@ -1,0 +1,3 @@
+/127.0.0.1:23235
+User does not exist
+[bg.sofia.uni.fmi.mjt.authserver.user.UserManager.loginWithUsernamePassword(UserManager.java:122), bg.sofia.uni.fmi.mjt.authserver.user.UserManager.login(UserManager.java:108), bg.sofia.uni.fmi.mjt.authserver.user.UserManager.parseCommand(UserManager.java:51), bg.sofia.uni.fmi.mjt.authserver.server.Server.handleClientInput(Server.java:99), bg.sofia.uni.fmi.mjt.authserver.server.Server.processReadableKey(Server.java:82), bg.sofia.uni.fmi.mjt.authserver.server.Server.processKey(Server.java:70), bg.sofia.uni.fmi.mjt.authserver.server.Server.handleClientRequests(Server.java:63), bg.sofia.uni.fmi.mjt.authserver.server.Server.start(Server.java:47), MainServer.main(MainServer.java:13)]

@@ -1,12 +1,12 @@
 package bg.sofia.uni.fmi.mjt.authserver.user;
 
 import bg.sofia.uni.fmi.mjt.authserver.exception.HashException;
+import bg.sofia.uni.fmi.mjt.authserver.exception.InvalidCommandException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.List;
 import java.util.UUID;
 
 public class User {
@@ -19,101 +19,108 @@ public class User {
     public static final int EMAIL_POS = 6;
     public static final int ADMIN_POS = 7;
 
-    public static final List<String> FIELDS = List.of(
-            new String[]{"--username", "--password", "--first-name", "--last-name", "--email"});
-    private String userId;
+    private final String userId;
     private String username;
-    private String password;
+    private final String salt;
+    private String passwordHash;
     private String firstName;
     private String lastName;
     private String email;
     private Boolean admin;
 
     private static final int SALT_SIZE = 16;
-    private static final int HEX1 = 0xff;
-    private static final int HEX2 = 0x100;
+    private static final int SALT_HEX1 = 0xff;
+    private static final int SALT_HEX2 = 0x100;
 
     public String getUsername() {
         return username;
     }
 
-    public User setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
-        return this;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSalt() {
+        return salt;
     }
 
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public User setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
-        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public User setLastName(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
-        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public User setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
-        return this;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
     public boolean isAdmin() {
         return admin;
     }
 
-    public User() {
-        userId = UUID.randomUUID().toString();
-        username = null;
-        password = null;
-        firstName = null;
-        lastName = null;
-        email = null;
-        admin = false;
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
-    public User(String username, String password, String firstName, String lastName, String email, boolean admin) {
+    public User(String username, String salt, String passwordHash, String userId,
+                String firstName, String lastName, String email, boolean admin) {
         this.username = username;
-        this.password = password;
+        this.salt = salt;
+        this.passwordHash = passwordHash;
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.admin = admin;
     }
 
-    public User(String username, String password, String userId,
-                String firstName, String lastName, String email, boolean admin) {
+    public User(String username, String password, String firstName, String lastName, String email, boolean admin) {
+        if (username == null || password == null || firstName == null
+                || lastName == null || email == null) {
+            throw new InvalidCommandException("All fields are required");
+        }
+        if (username.contains(",") || password.contains(",") || firstName.contains(",")
+                || lastName.contains(",") || email.contains(",")) {
+            throw new InvalidCommandException(", is forbidden");
+        }
+        if (username.contains("\n") || password.contains("\n") || firstName.contains("\n")
+                || lastName.contains("\n") || email.contains("\n")) {
+            throw new InvalidCommandException("newLine is forbidden");
+        }
         this.username = username;
-        this.password = password;
-        this.userId = userId;
+        try {
+            this.salt = getNewSalt();
+        } catch (NoSuchAlgorithmException e) {
+            throw new HashException("There was a problem with the hash algorithm, ", e);
+        }
+        this.passwordHash = getHashedPassword(password, salt);
+        this.userId = UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -129,7 +136,7 @@ public class User {
             byte[] bytes = md.digest(passwordToHash.getBytes());
             StringBuilder sb = new StringBuilder();
             for (byte aByte : bytes) {
-                sb.append(Integer.toString((aByte & HEX1) + HEX2, SALT_SIZE)
+                sb.append(Integer.toString((aByte & SALT_HEX1) + SALT_HEX2, SALT_SIZE)
                         .substring(1));
             }
             generatedPassword = sb.toString();
@@ -139,7 +146,7 @@ public class User {
         return generatedPassword;
     }
 
-    private static String getSalt() throws NoSuchAlgorithmException {
+    private static String getNewSalt() throws NoSuchAlgorithmException {
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[SALT_SIZE];
         sr.nextBytes(salt);
@@ -148,21 +155,9 @@ public class User {
 
     @Override
     public String toString() {
-        String salt;
-        try {
-            salt = getSalt();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return username + "," + salt + "," + getHashedPassword(password, salt)
+        return username + "," + salt + "," + passwordHash
                 + "," + userId + "," + firstName + ","
                 + lastName + "," + email + "," + admin
                 + System.lineSeparator();
-    }
-
-    public static User of(String str) {
-        String[] split = str.split(",");
-        return new User(split[USERNAME_POS], split[PASS_POS], split[ID_POS], split[FNAME_POS],
-                split[LNAME_POS], split[EMAIL_POS], Boolean.parseBoolean(split[ADMIN_POS]));
     }
 }

@@ -8,15 +8,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
-public class AuditLog {
+public class AuditLog implements AuditLogApi {
     private final String logDir;
     private final String logPath;
-    private static final String LOGNAME = "/log.txt";
+    private static final String LOG_NAME = "/log.txt";
 
     public AuditLog(String logDir) throws IOException {
         this.logDir = logDir;
-        this.logPath = logDir + LOGNAME;
+        this.logPath = logDir + LOG_NAME;
         createLogDirIfNotExists();
         createLogFileIfNotExists();
     }
@@ -72,10 +74,17 @@ public class AuditLog {
         }
     }
 
-    public void logError(String error) throws IOException {
+    public void logError(String text, Exception e) throws IOException {
         try (FileWriter fileWriter =
-                     new FileWriter(Paths.get(logDir + "/" + LocalDateTime.now() + ".txt").toFile(), true)) {
-            fileWriter.write(error);
+                     new FileWriter(Paths.get(logDir + "/" + getDateHour() + ".txt").toFile())) {
+            fileWriter.write(text + System.lineSeparator()
+                    + e.getMessage() + System.lineSeparator()
+                    + Arrays.toString(e.getStackTrace()));
         }
+    }
+
+    private String getDateHour() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd+HH-mm-ss")
+                .format(LocalDateTime.now());
     }
 }

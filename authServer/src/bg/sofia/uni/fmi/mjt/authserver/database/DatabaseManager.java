@@ -1,11 +1,8 @@
 package bg.sofia.uni.fmi.mjt.authserver.database;
 
-import bg.sofia.uni.fmi.mjt.authserver.client.Session;
+import bg.sofia.uni.fmi.mjt.authserver.exception.DatabaseException;
 import bg.sofia.uni.fmi.mjt.authserver.exception.InvalidCommandException;
-import bg.sofia.uni.fmi.mjt.authserver.exception.UserExistsException;
-import bg.sofia.uni.fmi.mjt.authserver.log.AuditLog;
-import bg.sofia.uni.fmi.mjt.authserver.server.Command;
-import bg.sofia.uni.fmi.mjt.authserver.server.SessionManager;
+import bg.sofia.uni.fmi.mjt.authserver.exception.UserNotFoundException;
 import bg.sofia.uni.fmi.mjt.authserver.user.User;
 
 import java.io.BufferedReader;
@@ -13,154 +10,119 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
 
-public class DatabaseManager {
+public class DatabaseManager implements DatabaseManagerApi {
     private final String dbPath;
-    private final AuditLog auditLog;
-    private final SessionManager sessionManager;
+    private final Map<String, User> users;
 
-    public DatabaseManager(String dbPath, AuditLog auditLog, SessionManager sessionManager) throws IOException {
+    public DatabaseManager(String dbPath) throws IOException {
+        createDbFileIfNotExists(dbPath);
+        try (FileReader fileReader = new FileReader(dbPath)) {
+            users = loadFromDb(fileReader);
+        }
         this.dbPath = dbPath;
-        this.auditLog = auditLog;
-        this.sessionManager = sessionManager;
-        createDbFileIfNotExists();
     }
 
-    public void updatePasswordInDb(String sessionId, String username,
-                                   String oldPassword, String newPassword, String userIp) throws IOException {
-        Session session = sessionManager.getSessionBySessionId(sessionId);
-        auditLog.logCommandStart(LocalDateTime.now(), Command.RESET_PASSWORD,
-                "database edit", session.getUserId(), userIp,
-                "reset password of" + username);
-        try {
-            editInDb(false, null, null, null, null, oldPassword, newPassword, null,
-                    User.ID_POS, session.getUserId());
-        } catch (Exception e) {
-            auditLog.logCommandEnd(LocalDateTime.now(), Command.DELETE_USER,
-                    "database edit", session.getUserId(), userIp,
-                    "fail. " + e.getMessage());
+    private Map<String, User> loadFromDb(Reader reader) {
+        Map<String, User> newUsers = new LinkedHashMap<>();
+        try (BufferedReader bufferedReader = new BufferedReader(reader)) {
+            String currentLine;
+            while ((currentLine = bufferedReader.readLine()) != null) {
+                String[] values = currentLine.split(",");
+                User user = new User(values[User.USERNAME_POS], values[User.SALT_POS], values[User.PASS_POS],
+                        values[User.ID_POS], values[User.FNAME_POS], values[User.LNAME_POS], values[User.EMAIL_POS],
+                        Boolean.parseBoolean(values[User.ADMIN_POS]));
+                newUsers.put(values[User.ID_POS], user);
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return newUsers;
     }
 
-    public void updateUserInDb(String sessionId, String username,
-                        String email, String firstName, String lastName, String userIp) throws IOException {
-        Session session = sessionManager.getSessionBySessionId(sessionId);
-        auditLog.logCommandStart(LocalDateTime.now(), Command.RESET_PASSWORD,
-                "database edit", session.getUserId(), userIp,
-                "edit user of" + username);
-        try {
-            editInDb(false, username, email, firstName, lastName, null, null, null,
-                    User.ID_POS, session.getUserId());
-        } catch (Exception e) {
-            auditLog.logCommandEnd(LocalDateTime.now(), Command.DELETE_USER,
-                    "database edit", session.getUserId(), userIp,
-                    "fail. " + e.getMessage());
-            throw new RuntimeException(e);
+    public void editPassword(String userId, String oldPassword, String newPassword) {
+        User userToEdit = users.get(userId);
+        if (userToEdit.getPasswordHash().equals(User.getHashedPassword(oldPassword, userToEdit.getSalt()))) {
+            userToEdit.setPasswordHash(User.getHashedPassword(newPassword, userToEdit.getSalt()));
         }
+        writeToDb();
     }
 
-    public void editInDb(boolean delete, String username, String email, String firstName, String lastName,
-                          String oldPassword, String newPassword, Boolean admin, int searchByPos, String searchWord)
-            throws IOException {
-        Path tempFile = Files.createTempFile("tempFile", "txt");
-        BufferedReader reader = new BufferedReader(new FileReader(dbPath));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile.toFile()));
-        String currentLine;
-        while ((currentLine = reader.readLine()) != null) {
-            String[] values = currentLine.split(",");
-            currentLine += System.lineSeparator();
-            if (values[searchByPos].equals(searchWord)) {
-                if (!delete) {
-                    if (oldPassword == null || newPassword == null) {
-                        currentLine = editedLine(username, email, firstName, lastName, admin, values);
-                    } else if (User.getHashedPassword(oldPassword, values[User.SALT_POS])
-                            .equals(values[User.PASS_POS])) {
-                        currentLine = (new User(values[User.USERNAME_POS], newPassword, values[User.FNAME_POS],
-                                values[User.LNAME_POS], values[User.EMAIL_POS],
-                                Boolean.parseBoolean(values[User.ADMIN_POS]))) + System.lineSeparator();
-                    } else {
-                        throw new InvalidCommandException("Wrong password");
-                    }
-                } else {
-                    currentLine = "";
-                }
+    @Override
+    public void editUser(String userId, String username,
+                         String firstName, String lastName, String email, Boolean admin) {
+        User user = users.get(userId);
+        if (username != null) {
+            if (users.values().stream().anyMatch(x -> x.getUsername().equals(username))) {
+                throw new InvalidCommandException("Username taken");
             }
-            writer.write(currentLine);
+            user.setUsername(username);
         }
-        writer.close();
-        reader.close();
-        Files.move(tempFile, Paths.get(dbPath), StandardCopyOption.REPLACE_EXISTING);
+        if (email != null) {
+            user.setEmail(email);
+        }
+        if (firstName != null) {
+            user.setFirstName(firstName);
+        }
+        if (lastName != null) {
+            user.setLastName(lastName);
+        }
+        if (admin != null) {
+            user.setAdmin(admin);
+        }
+        writeToDb();
     }
 
-    private String editedLine(String username, String email, String firstName, String lastName,
-                              Boolean admin, String[] values) {
-        return ((username != null) ? username : values[User.USERNAME_POS]) + "," +
-                values[User.SALT_POS] + "," + values[User.PASS_POS] + "," + values[User.ID_POS] + "," +
-                ((firstName != null) ? firstName : values[User.FNAME_POS]) + "," +
-                ((lastName != null) ? lastName : values[User.LNAME_POS]) + "," +
-                ((email != null) ? email : values[User.EMAIL_POS]) + "," +
-                ((admin != null) ? admin : values[User.ADMIN_POS]) + System.lineSeparator();
+    public void addUser(User user) {
+        users.put(user.getUserId(), user);
+        writeToDb();
     }
 
-    public void addToDb(User user) throws IOException {
-        if (user.getUsername() == null || user.getPassword() == null || user.getFirstName() == null
-                || user.getLastName() == null || user.getEmail() == null) {
-            throw new InvalidCommandException("All fields are required");
+    public void deleteUser(String userId) {
+        if (!users.containsKey(userId)) {
+            throw new DatabaseException("no user with this userId");
         }
-        if (user.getUsername().contains(",") || user.getPassword().contains(",") || user.getFirstName().contains(",")
-                || user.getLastName().contains(",") || user.getEmail().contains(",")) {
-            throw new InvalidCommandException(", is forbidden");
-        }
-        if (user.getUsername().contains("\n") || user.getPassword().contains("\n") || user.getFirstName().contains("\n")
-                || user.getLastName().contains("\n") || user.getEmail().contains("\n")) {
-            throw new InvalidCommandException("newLine is forbidden");
-        }
-        Path path = Paths.get(dbPath);
-        List<String> strings = Files.readAllLines(path);
-        for (String string : strings) {
-            if (string.startsWith(user.getUsername() + ",")) {
-                throw new UserExistsException("can't add user, user already exists");
+        users.remove(userId);
+        writeToDb();
+    }
+
+    private void writeToDb() {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(dbPath))) {
+            String db = users.values().stream().collect(StringBuilder::new,
+                    (x, y) -> x.append(y.toString()), (y, x) -> x.append(y.toString())).toString();
+            if (!db.isEmpty()) {
+                bufferedWriter.write(db);
             }
-        }
-        try (FileWriter fileWriter = new FileWriter(dbPath, true)) {
-            fileWriter.write(user.toString());
-        } catch (Exception e) {
-            throw new InvalidCommandException("FileWriterProblem", e);
+        } catch (IOException e) {
+            throw new DatabaseException("Problem with writing to database", e);
         }
     }
 
-    private void createDbFileIfNotExists() throws IOException {
+    private void createDbFileIfNotExists(String dbPath) throws IOException {
         Path path = Paths.get(dbPath);
         if (Files.notExists(path)) {
             Files.createFile(path);
         }
     }
 
-    public String findUserInDatabase(String username) throws IOException {
-        String user;
-        try (Stream<String> stream = Files.lines(Paths.get(dbPath))) {
-            user = stream.filter(x -> x.split(",")[User.USERNAME_POS].equals(username))
-                    .findFirst()
-                    .orElse(null);
+    public User findUserInDatabase(String username) {
+        Optional<User> user = users.values().stream().filter(x -> x.getUsername().equals(username)).findAny();
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User does not exist");
         }
-        return user;
+        return user.get();
     }
 
-    public boolean isLastAdmin() throws IOException {
-        long n;
-        try (Stream<String> stream = Files.lines(Paths.get(dbPath))) {
-            n = stream.filter(x -> Boolean.parseBoolean(x.split(",")[User.ADMIN_POS]))
-                    .limit(2)
-                    .count();
-        }
-        return n < 2;
+    public boolean isLastAdmin() {
+        return users.values().stream().filter(User::isAdmin)
+                .limit(2)
+                .count() < 2;
     }
 }

@@ -1,4 +1,4 @@
-package bg.sofia.uni.fmi.mjt.authserver.client;
+package bg.sofia.uni.fmi.mjt.authserver.session;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,11 +10,7 @@ public class Session {
     LocalDateTime ttl;
     Boolean admin;
 
-    private static final int MINUTES_TTL = 5;
-
-    public String getUserId() {
-        return userId;
-    }
+    private static final int MINUTES_TTL = 1;
 
     public Session(String userId, String username, Boolean admin) {
         this.userId = userId;
@@ -26,6 +22,10 @@ public class Session {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public void setUsername(String username) {
@@ -44,10 +44,6 @@ public class Session {
         return sessionId;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
     public LocalDateTime getTtl() {
         return ttl;
     }
@@ -56,8 +52,8 @@ public class Session {
         this.ttl = ttl;
     }
 
-    @Override
     public String toString() {
         return "SessionID: " + sessionId;
     }
+
 }
